@@ -22,6 +22,9 @@ function Nav(props) {
       <Link to="/">
         <button>Logout</button>
       </Link>
+      <br />
+      <img src={props.profile_pic} alt="profile_pic" />
+      <h2>{props.username}</h2>
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import axios from 'axios';
+import { getUserInfo } from '../../redux/reducer';
+import { connect } from 'react-redux';
 
 class Auth extends Component {
   constructor() {
@@ -24,23 +26,27 @@ class Auth extends Component {
 
   registerUser() {
     const { username, password } = this.state;
-    axios.post('/api/auth/register', { username, password }).then(() => {
+    axios.post('/api/auth/register', { username, password }).then((nodeRes) => {
+      const { id, username, profile_pic } = nodeRes.data;
       this.setState({
         username: '',
         password: '',
         redirect: true
       });
+      this.props.getUserInfo(id, username, profile_pic);
     });
   }
 
   loginUser() {
     const { username, password } = this.state;
-    axios.post('/api/auth/login', { username, password }).then(() => {
+    axios.post('/api/auth/login', { username, password }).then((nodeRes) => {
+      const { id, username, profile_pic } = nodeRes.data;
       this.setState({
         username: '',
         password: '',
         redirect: true
       });
+      this.props.getUserInfo(id, username, profile_pic);
     });
   }
 
@@ -81,4 +87,4 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+export default connect(null, { getUserInfo })(Auth);

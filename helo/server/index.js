@@ -17,6 +17,15 @@ app.use(
   })
 );
 
+app.get('/api/getPostsByID', (req, res) => {
+  const db = req.app.get('db');
+  const { id } = req.query;
+
+  db.getPostsByID([id]).then((posts) => {
+    res.status(200).send(posts);
+  });
+});
+
 app.post('/api/auth/register', (req, res) => {
   const db = req.app.get('db');
   const { username, password } = req.body;
